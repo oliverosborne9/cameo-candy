@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/canvas.css') }}" />
+{% endblock %}
+
+
+{% block content %}
+<div class="text-center">
+    Here's your masterpiece... <br>
+    <img src="{{ url_for('static', filename='art/latest.png') }}?{{ ts }}" class="img-fluid"
+        alt="Latest submitted image">
+</div>
+{% for colour, task_id in tasks.items() %}
+<div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" id="progressbar{{ colour }}"
+        style="background-color: {{ colours[colour].rgbString }};" role="progressbar" aria-valuenow="0"
+        aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div id="taskid{{ colour }}" uid="{{ task_id }}"></div>
+</br>
+{% endfor %}
+<div id="colours" uid="{{ cols }}"></div>
+<script src="{{ url_for('static', filename='js/progress.js') }}"></script>
+{% endblock %}

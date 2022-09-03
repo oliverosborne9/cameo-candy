@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "bootstrap/form.html" import render_field %}
+
+{% block meta %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}" />
+
+<style>
+  .form-control {
+    margin-bottom: 0.5rem !important;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card bg-light p-3 mx-auto" style="width: 15rem;">
+
+  <h2>{{ form_formatting.heading }}</h2>
+  <form class="form" method="POST">
+    {{ form.csrf_token }}
+    {{ render_field(form.username, placeholder='Your Username') }}
+    {{ render_field(form.password, placeholder=form_formatting.password_placeholder) }}
+    {% if form_formatting.register %}
+    {{ render_field(form.confirm_password, placeholder='Confirm New Password') }}
+    {% endif %}
+    <div class="d-grid gap-2">
+      {{ render_field(form.submit) }}
+    </div>
+    {% if not form_formatting.register %}
+    No login? <a href="{{ url_for('.register') }}">Register here.</a>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

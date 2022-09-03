@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% from 'bootstrap4/utils.html' import render_icon %}
+
+{% block meta %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/canvas.css') }}" />
+{% endblock %}
+
+
+{% block content %}
+
+
+<nav class="navbar navbar-expand-xl navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">Controls</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item mt-1" style="width: 250px;">
+          <div class="btn-group" role="group" aria-label="Colour selector buttons">
+            <button id="paintbrush" class="btn" disabled>
+              <svg class="bi" width="1em" height="1em" fill="currentColor">
+                <use id="icon-use" xlink:href="/bootstrap/static/icons/bootstrap-icons.svg#brush-fill" />
+              </svg>
+            </button>
+            {% for name, props in colours.items() %}
+            <div id="{{name}}Intensity" intensity="{{ props.intensity }}"></div>
+            <button type="button" class="btn btn-outline-secondary" style="color:{{ props.rgbString }};"
+              onclick="changeColour('{{ props.rgbString }}')"><span class="bg-light oval-bg"
+                style="box-decoration-break: clone;">{{
+                name.capitalize() }}</span></button>
+            {% endfor %}
+          </div>
+        </li>
+        <li class="nav-item mt-1" style="width: 250px;">
+          <div class="d-grid gap-2">
+            <button type="button" class="btn btn-outline-secondary"
+              onclick="changeColour('rgb(255,255,255)')">Eraser</button>
+          </div>
+        </li>
+        <li class="nav-item mt-1" style="width: 250px;">
+          <div class="container d-flex mx-auto">
+            <label for="brush-width-range" style="width: 35px;">Size</label>
+            <input type="range" class="form-range flex-grow-1" id="brush-width-range">
+          </div>
+        </li>
+        <li class="nav-item mt-1" style="width: 250px;">
+          <div class="d-grid gap-2">
+            <button type="button" class="btn btn-secondary" onclick="canvasSetup()">Reset Drawing</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" id="container">
+  <canvas id="canvas"></canvas>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="d-grid gap-2 bar-chart-height">
+        <canvas id="quantityBar"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="row">
+        {% for name, props in colours.items() %}
+        <div class="col-sm-4 align-items-center">
+          <div id="{{ name }}Capacity" capacity="{{ props.capacityGrams }}"></div>
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title" style="color:{{ props.rgbString }}">{{ props.contents }}</h6>
+              <p class="card-text small">Quantity: <span id="{{ name }}-g"></span> g</br>
+                Capacity: {{ props.capacityGrams }} g</p>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                  style="background-color:{{ props.rgbString }}" id="progressbar{{ name }}" role="progressbar"
+                  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-1 mb-1">
+  <div class="d-grid gap-2">
+    <button id="button" type="button" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loadingModalLabel">Processing Your Drawing</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% for col, props in colours.items() %}
+<div id="contents{{ col|capitalize }}" uid="{{ props.contents|safe }}"></div>
+<div id="bar{{ col|capitalize }}" uid="{{ props.rgbString|safe }}"></div>
+{% endfor %}
+{% if config.BOOTSTRAP_SERVE_LOCAL %}
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+{% else %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endif %}
+<script src="{{ url_for('static', filename='js/chartsetup.js') }}"></script>
+<script src="{{ url_for('static', filename='js/canvas.js') }}"></script>
+{% endblock %}

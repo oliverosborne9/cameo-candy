@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block meta %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}" />
+{% endblock %}
+
+{% block content %}
+<h1 class="text-white">Welcome</h1>
+<p class="text-white">{{ text }}</p>
+<a href="{{ url_for('.draw')}}" class="btn btn-info">Start Drawing</a>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{ bootstrap.load_css() }}
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/candy.svg') }}" />
+    <title>Dispenser</title>
+    {% block meta %}{% endblock %}
+
+    {% if config.BOOTSTRAP_SERVE_LOCAL %}
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    {% else %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {% endif %}
+
+</head>
+
+<body class="d-flex flex-column h-100">
+
+    <nav class="navbar navbar-expand navbar-light" style="background-color:thistle;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('routes.index')}}">
+                <img src="{{ url_for('static', filename='images/candy.svg') }}" alt="Candy logo" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                Dispenser
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {{ render_nav_item('routes.index', 'Home', use_li=True) }}
+                    {{ render_nav_item('routes.draw', 'Draw', use_li=True) }}
+                    {{ render_nav_item('routes.gallery', 'Gallery', use_li=True) }}
+                </ul>
+                <span class="navbar-text">
+                    {% if user %}
+                    <a href="{{ url_for('routes.logout')}}">Logout</a>
+                    {% else %}
+                    <a href="{{ url_for('routes.login')}}">Login</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </nav>
+    </br>
+
+    <main class="container">
+        {{ render_messages(container=False, dismissible=True) }}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted small">&copy Oli O</span>
+        </div>
+    </footer>
+
+    {{ bootstrap.load_js() }}
+
+</body>
+
+</html>

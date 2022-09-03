@@ -1,0 +1,8 @@
+__pycache__/
+venv/
+*.egg-info
+candy/static/art/
+.vscode/
+*config.json
+.scannerwork
+*.env

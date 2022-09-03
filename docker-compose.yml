@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    env_file:
+      - "db.env"
+    ports:
+      - 5432:5432
+
+  # redis:
+  #   image: redis:latest
+  #   container_name: redis
+
+  candy:
+    container_name: candy
+    depends_on:
+      - postgres
+      # - mechanic
+    build:
+      context: .
+    ports:
+      - 80:6040
+    env_file:
+      - "db.env"
+    environment:
+      - SERVE_LOCAL=True
+    volumes:
+      - gallery:/cameo_candy/candy/static/art:rw
+  # mechanic:
+  #   privileged: true
+  #   depends_on:
+  #     - redis
+  #   container_name: mechanic
+  #   build:
+  #     context: rpi_api
+  #   ports:
+  #     - 7070:7070
+  #   volumes:
+  #     - "/dev:/dev"
+
+volumes:
+  gallery:

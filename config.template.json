@@ -1,0 +1,30 @@
+{
+  "colours": {
+    "blue": {
+      "b": 255,
+      "capacityGrams": 0,
+      "contents": "",
+      "g": 0,
+      "r": 0
+    },
+    "green": {
+      "b": 0,
+      "capacityGrams": 0,
+      "contents": "",
+      "g": 128,
+      "r": 0
+    },
+    "red": {
+      "b": 0,
+      "capacityGrams": 0,
+      "contents": "",
+      "g": 0,
+      "r": 255
+    }
+  },
+  "hardwareApi": {
+    "host": "mechanic",
+    "port": 5000
+  },
+  "welcomeText": ""
+}
