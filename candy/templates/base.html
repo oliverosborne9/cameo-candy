@@ -25,7 +25,7 @@
 
     <nav class="navbar navbar-expand navbar-light" style="background-color:thistle;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('routes.index')}}">
+            <a class="navbar-brand" href="{{ url_for('general.index')}}">
                 <img src="{{ url_for('static', filename='images/candy.svg') }}" alt="Candy logo" width="30" height="24"
                     class="d-inline-block align-text-top">
                 Dispenser
@@ -37,15 +37,15 @@
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    {{ render_nav_item('routes.index', 'Home', use_li=True) }}
-                    {{ render_nav_item('routes.draw', 'Draw', use_li=True) }}
-                    {{ render_nav_item('routes.gallery', 'Gallery', use_li=True) }}
+                    {{ render_nav_item('general.index', 'Home', use_li=True) }}
+                    {{ render_nav_item('drawing.draw', 'Draw', use_li=True) }}
+                    {{ render_nav_item('drawing.gallery', 'Gallery', use_li=True) }}
                 </ul>
                 <span class="navbar-text">
                     {% if user %}
-                    <a href="{{ url_for('routes.logout')}}">Logout</a>
+                    <a href="{{ url_for('general.logout')}}">Logout</a>
                     {% else %}
-                    <a href="{{ url_for('routes.login')}}">Login</a>
+                    <a href="{{ url_for('general.login')}}">Login</a>
                     {% endif %}
                 </span>
             </div>

@@ -21,12 +21,15 @@ class Images(db.Model):
     img_loc = db.Column(db.String(80))
 
 
-def image_cleanup(mapper, connection, target: Images):
+def image_cleanup(*args):
     """
     Callback function to delete an image file
     after its row is removed from the Images table
     in the database.
     """
+    target: Images
+    # Thowaway all but last parameter, target record
+    *_, target = args
     os.unlink(target.img_loc)
 
 

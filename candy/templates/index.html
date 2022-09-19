@@ -7,5 +7,5 @@
 {% block content %}
 <h1 class="text-white">Welcome</h1>
 <p class="text-white">{{ text }}</p>
-<a href="{{ url_for('.draw')}}" class="btn btn-info">Start Drawing</a>
+<a href="{{ url_for('drawing.draw')}}" class="btn btn-info">Start Drawing</a>
 {% endblock %}
