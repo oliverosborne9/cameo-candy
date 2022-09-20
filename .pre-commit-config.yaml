@@ -2,7 +2,7 @@
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.3.0
     hooks:
       - id: check-merge-conflict
       - id: end-of-file-fixer
@@ -14,20 +14,20 @@ repos:
     rev: v2.2.0
     hooks:
       - id: seed-isort-config
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.8.0
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
     hooks:
       - id: isort
-  - repo: https://github.com/ambv/black
-    rev: 21.5b1
+  - repo: https://github.com/psf/black
+    rev: 22.8.0
     hooks:
       - id: black
   - repo: https://github.com/pycqa/flake8
-    rev: 3.9.2
+    rev: 5.0.4
     hooks:
       - id: flake8
   - repo: https://github.com/pycqa/bandit
-    rev: 1.7.0
+    rev: 1.7.4
     hooks:
       - id: bandit
         args: ["--skip=B311", "--skip=B101"]
