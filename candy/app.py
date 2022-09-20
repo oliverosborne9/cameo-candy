@@ -1,5 +1,4 @@
-import random
-import string
+import secrets
 from os import getenv
 
 from distutils.util import strtobool
@@ -40,9 +39,7 @@ def create_app() -> Flask:
     app.app_context().push()
     db.create_all()
 
-    app.secret_key = "".join(
-        random.choices(string.ascii_uppercase + string.digits, k=20)
-    )
+    app.secret_key = secrets.token_urlsafe(16)
 
     app.register_blueprint(general_blueprint)
     app.register_blueprint(drawing_blueprint)
