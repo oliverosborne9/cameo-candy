@@ -11,14 +11,16 @@ from flask_login import current_user
 from candy.objects import DATABASE_CONNECTION_URI
 from candy.objects.model import Images, User, db, login_manager
 from candy.objects.twin import Twin
-from candy.routes.routes import blueprint
+from candy.routes.drawing import drawing_blueprint
+from candy.routes.general import general_blueprint
+from candy.routes.helper import helper_blueprint
 
 
 def page_not_found(e):
     return render_template("404.html"), 404
 
 
-def start_app():
+def create_app() -> Flask:
 
     app = Flask(__name__)
 
@@ -38,11 +40,15 @@ def start_app():
     db.create_all()
 
     app.secret_key = secrets.token_urlsafe(16)
-    app.register_blueprint(blueprint)
+
+    app.register_blueprint(general_blueprint)
+    app.register_blueprint(drawing_blueprint)
+    app.register_blueprint(helper_blueprint)
+
     app.register_error_handler(404, page_not_found)
 
     login_manager.init_app(app)
-    login_manager.login_view = "routes.login"
+    login_manager.login_view = "general.login"
 
     class CustomModelView(ModelView):
         def is_accessible(self):
@@ -61,8 +67,9 @@ def start_app():
         user = False if current_user.is_anonymous else current_user.username
         return dict(user=user)
 
-    app.run(host="0.0.0.0", port=6040)  # nosec:B104
+    return app
 
 
 if __name__ == "__main__":
-    start_app()
+    app = create_app()
+    app.run(host="0.0.0.0", port=6040)  # nosec:B104
