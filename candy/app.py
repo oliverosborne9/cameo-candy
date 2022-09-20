@@ -1,5 +1,4 @@
-import random
-import string
+import secrets
 from os import getenv
 
 from distutils.util import strtobool
@@ -38,9 +37,7 @@ def start_app():
     app.app_context().push()
     db.create_all()
 
-    app.secret_key = "".join(
-        random.choices(string.ascii_uppercase + string.digits, k=20)
-    )
+    app.secret_key = secrets.token_urlsafe(16)
     app.register_blueprint(blueprint)
     app.register_error_handler(404, page_not_found)
 
