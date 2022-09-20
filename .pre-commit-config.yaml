@@ -31,3 +31,6 @@ repos:
     hooks:
       - id: bandit
         args: ["--skip=B311", "--skip=B101"]
+
+default_language_version:
+  python: python3.10
