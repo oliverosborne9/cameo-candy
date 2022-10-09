@@ -23,7 +23,7 @@ const greenCapacity = parseInt(document.getElementById("greenCapacity").getAttri
 const blueCapacity = parseInt(document.getElementById("blueCapacity").getAttribute("capacity"));
 
 function initialSetup() {
-    const startBrushWidth = Math.min(Math.floor(windowWidth / 30), 50);
+    const startBrushWidth = Math.min(Math.floor(windowWidth / 40), 50);
     document.getElementById("brush-width-range").value = startBrushWidth;
     canvasSetup();
 }
@@ -39,8 +39,8 @@ function smartCanvasSetup() {
 function canvasSetup() {
 
     canvas.width = container.clientWidth - 25;
-    var smartHeight = Math.min(Math.floor(container.clientWidth * 3 / 4), (window.innerHeight - 420));
-    canvas.height = Math.max(smartHeight, 400);
+    var smartHeight = Math.min(Math.floor(container.clientWidth * 3 / 4), (window.innerHeight - 385));
+    canvas.height = Math.max(smartHeight, 220);
 
 
     // White background
